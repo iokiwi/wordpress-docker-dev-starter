@@ -1,0 +1,52 @@
+version: '3.1'
+
+services:
+  wordpress:
+    build: .
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: $DB_HOSTNAME
+      WORDPRESS_DB_USER: $DB_USERNAME
+      WORDPRESS_DB_PASSWORD: $DB_PASSWORD
+      WORDPRESS_DB_NAME: $DB_NAME
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', '$WP_HOME');
+        define('WP_SITEURL', '$WP_SITEURL');
+    volumes:
+      - ./themes:/var/www/html/wp-content/themes/
+      - ./plugins:/var/www/html/wp-content/plugins/
+      # - ./path/to/my/theme:/var/www/html/wp-content/themes/my-theme
+      # - ./my-theme:/var/www/html/wp-content/themes/my-theme
+      # - ./my-plugin:/var/www/html/wp-content/plugins/my-plugin
+
+  db:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USERNAME
+      MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+    volumes:
+      - db:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: $DB_HOSTNAME
+      PMA_USER: $DB_USERNAME
+      PMA_PASSWORD: $DB_PASSWORD
+      # MYSQL_ROOT_PASSWORD is used here only if you need to access phpMyAdmin as the MySQL root user
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+    depends_on:
+      - db
+
+volumes:
+  db:

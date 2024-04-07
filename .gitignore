@@ -1,0 +1,8 @@
+themes/*
+!themes/.keep
+plugins/*
+!plugins/.keep
+
+composer.lock
+*.sql
+/vendor/
