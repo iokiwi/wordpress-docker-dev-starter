@@ -2,13 +2,7 @@
 
 A starter docker environment for building and testing WordPress Plugins and Themes against.
 
-|||
-|---|---|
-|WordPress|http://localhost:8080|
-|phpMyAdmin|http://localhost:8081|
-|MySQL|`mysql://db:3306` or `mysql://localhost:3306`|
-
-## WordPress Theme and Plugin Development
+## Quick Start
 
 1. Ensure user and group permission in container match host user and group to side step entre world of file permission pain.
     ```bash
@@ -16,14 +10,18 @@ A starter docker environment for building and testing WordPress Plugins and Them
     ```
     The version of PHP and WordPress can optionally be controlled via the `$WORDPRESS_TAG` variable (Default: `6.4-php8.3`) on both the script and the Dockerfile.
 
-2. Install additional plugins and themes from [WordPress Packagist](https://wpackagist.org/) via composer.
+2. Install any additional 3rd party plugins and themes
     ```bash
-    composer install
+    ./install-deps.sh
     ```
 
-3. Bring up the stack
+3. Source environment variables
     ```bash
     source envs/dev.env
+    ```
+
+4. Start the dev environment
+    ```bash
     docker compose up
     ```
 
