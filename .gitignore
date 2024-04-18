@@ -6,3 +6,4 @@ plugins/*
 composer.lock
 *.sql
 /vendor/
+**/local.env

@@ -17,7 +17,7 @@ docker compose up -d
 
 echo
 echo "Access:"
-echo "  WordPress.....http://localhost:8080"
+echo "  WordPress.....$WP_SITEURL"
 echo "  PhpMyAdmin....http://localhost:8081"
 
 echo
