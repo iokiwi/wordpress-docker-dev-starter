@@ -1,6 +1,6 @@
 # WordPress Docker Dev Environment Starter
 
-A starter docker environment for building and testing WordPress Plugins and Themes against.
+A starter docker environment for building and testing WordPress Plugins and Themes against different versions of WordPress and PHP
 
 ## Quick Start
 
