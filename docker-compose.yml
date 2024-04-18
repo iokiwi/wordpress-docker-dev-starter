@@ -1,5 +1,4 @@
-version: '3.1'
-
+---
 services:
   wordpress:
     build: .
@@ -22,7 +21,7 @@ services:
       # - ./my-plugin:/var/www/html/wp-content/plugins/my-plugin
 
   db:
-    image: mysql:8.0
+    image: ${DATABASE_IMAGE:-mysql:8.0}
     restart: always
     ports:
       - 3306:3306
