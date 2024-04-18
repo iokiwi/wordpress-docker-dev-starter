@@ -14,7 +14,6 @@ echo "Installing plugins..."
 echo "Installing themes..."
 
 
-
 ################################ END CUSTOM SCRIPTS ######################################
 echo "Installing wpackagist dependencies..."
 composer install

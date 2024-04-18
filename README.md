@@ -4,20 +4,31 @@ A starter docker environment for building and testing WordPress Plugins and Them
 
 ## Quick Start
 
-1. Ensure user and group permission in container match host user and group to side step entre world of file permission pain.
+```bash
+./setup-all.sh
+```
+
+## Steps
+
+1. Source environment variables
+    ```bash
+    source envs/dev.env
+    ```
+
+2. Ensure user and group permission in container match host user and group to side step entre world of file permission pain.
     ```bash
     ./build.sh
     ```
     The version of PHP and WordPress can optionally be controlled via the `$WORDPRESS_TAG` variable (Default: `6.4-php8.3`) on both the script and the Dockerfile.
 
-2. Install any additional 3rd party plugins and themes
+3. Install any additional 3rd party plugins and themes
     ```bash
     ./install-deps.sh
     ```
 
-3. Source environment variables
+3. Install any additional 3rd party plugins and themes
     ```bash
-    source envs/dev.env
+    ./install-deps.sh
     ```
 
 4. Start the dev environment
@@ -25,7 +36,7 @@ A starter docker environment for building and testing WordPress Plugins and Them
     docker compose up
     ```
 
-4. Access the site http://localhost:8080
+5. Access the site http://localhost:8080
 
 ## Services
 
@@ -75,23 +86,23 @@ source envs/dev.env
 ### Access the Database
 
 ```bash
-docker-compose exec db mysql -u $DB_USERNAME -p$DB_PASSWORD $DB_NAME
+docker compose exec db mysql -u $DB_USERNAME -p$DB_PASSWORD $DB_NAME
 ```
 Connect as root
 
 ```bash
-docker-compose exec db mysql -u root -p$DB_ROOT_PASSWORD
+docker compose exec db mysql -u root -p$DB_ROOT_PASSWORD
 ```
 
 ### Export
 
 ```bash
-docker-compose exec db mysqldump -u root -p$DB_ROOT_PASSWORD --all-databases > dump.sql
+docker compose exec db mysqldump -u root -p$DB_ROOT_PASSWORD --all-databases > dump.sql
 ```
 
 ### Import
 
 ```bash
-docker-compose exec -T db mysql -u root -p$DB_ROOT_PASSWORD $DB_NAME < dump.sql
+docker compose exec -T db mysql -u root -p$DB_ROOT_PASSWORD $DB_NAME < dump.sql
 ```
 
