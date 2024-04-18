@@ -37,19 +37,17 @@ For example `6.5-php8.3` will give us an image with WordPress 6.5 and php 8.3 if
     ./install-deps.sh
     ```
 
-3. Install any additional 3rd party plugins and themes
+4. (Optional) Attempt to automatically discover any *.sql files and import them into the database.
     ```bash
-    ./install-deps.sh
+    ./import-data.sh
     ```
 
-4. Start the dev environment
+5. Start the dev environment
     ```bash
     docker compose up
     ```
 
-5. Access the site http://localhost:8080
-
-## Services
+## Access to Services
 
 |Service|URL|
 |---|---|
@@ -66,28 +64,30 @@ A theme or plugin under development can be `git cloned` into `./theme` or `./plu
 E.g.
 
 ```bash
-git clone git@github.com:johnsmith/my-theme.git ./themes/my-theme
+git clone git@github.com:johnsmith/my-theme.git themes/my-theme
 ```
 
-## Programatically requiring additional 3rd party themes and plugins
+## Programatically requiring 3rd party themes and plugins
 
 Any theme or plugin in ./themes or ./plugins are 'installed' and available for use in wordpress.
 
-### WordPress Packagist
+### A) WordPress Packagist
 
 [WordPress Packagist](https://wpackagist.org/) is a project to utilise [composer](https://getcomposer.org/) to programatically manage and install wordpress plugins.
 
-E.g.
+Wordpress plugins and themes available via Wordpress Packagist can be required and installed via composer.
 
 ```bash
 composer require wpackagist-plugin/woocommerce
 ```
 
-More information and installable plugins and themes on [WordPress Packagist](https://wpackagist.org/)
+More information on [WordPress Packagist](https://wpackagist.org/)
 
-### Custom scripted installation
+### B) Custom scripted installation in install-deps.sh
 
-Though empty, the `install-deps.sh` script has been included as a suggested location to do any custom scripted installation of themes or plugins as required.
+Custom scripted installation of additional themes and plugins can be added to `install-deps.sh`.
+
+The `install-deps.sh` script will also call the `composer install` command for us to install any packages listed in our `composer.json`
 
 ## Working with the Database via CLI
 
@@ -97,7 +97,7 @@ Firstly, source the database credentials.
 source envs/dev.env
 ```
 
-We can check what is set with
+We can which variables are set with the `env` command
 
 ```bash
 env | grep DB_
@@ -105,7 +105,7 @@ env | grep DB_
 
 ### Access the Database
 
-Connect as WordPress db user
+Connect as WordPress system db user
 ```bash
 docker compose exec db mysql -u $DB_USERNAME -p$DB_PASSWORD $DB_NAME
 ```
@@ -128,7 +128,7 @@ docker compose exec db mysqldump -u root -p$DB_ROOT_PASSWORD --all-databases > d
 docker compose exec -T db mysql -u root -p$DB_ROOT_PASSWORD $DB_NAME < dump.sql
 ```
 
-Or the import `./import-data.sh` script will search our systems
+Or the `./import-data.sh` helper script will search our repo for a `*.sql` file and import it into the database for us.
 
 ```bash
 ./import-data.sh
