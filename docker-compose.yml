@@ -5,7 +5,6 @@ services:
       context: .
       args:
         WORDPRESS_TAG: ${WORDPRESS_TAG}
-    # image: wordpress-docker-dev-starter:${WORDPRESS_TAG}
     restart: always
     ports:
       - 8080:80

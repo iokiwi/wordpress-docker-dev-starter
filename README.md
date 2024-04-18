@@ -4,11 +4,22 @@ A starter docker environment for building and testing WordPress Plugins and Them
 
 ## Quick Start
 
+Setup up a full docker compose stack
+
 ```bash
 ./setup-all.sh
 ```
 
-## Steps
+You can optionally request a specific version of WordPress and PHP
+by providing the relevant [docker image tag](https://hub.docker.com/_/wordpress/tags).
+
+```bash
+./setup-all.sh 6.5-php8.3
+```
+
+For example `6.5-php8.3` will give us an image with WordPress 6.5 and php 8.3 if we want to test those specific versions.
+
+## Step By Step
 
 1. Source environment variables
     ```bash
@@ -64,37 +75,48 @@ Any theme or plugin in ./themes or ./plugins are 'installed' and available for u
 
 ### WordPress Packagist
 
-[WordPress Packagist](https://wpackagist.org/) is a project to utilise [composer](https://getcomposer.org/) to programatically manage and install wordpress plugins and themes.
+[WordPress Packagist](https://wpackagist.org/) is a project to utilise [composer](https://getcomposer.org/) to programatically manage and install wordpress plugins.
+
+E.g.
 
 ```bash
 composer require wpackagist-plugin/woocommerce
 ```
 
-Use the `wpackagist-plugin` or `wpackagist-theme` vendor prefix plus the name of any theme or plugin to install.
+More information and installable plugins and themes on [WordPress Packagist](https://wpackagist.org/)
 
-### Bash script
+### Custom scripted installation
 
-Though empty, the `install-deps.sh` script has been included as a suggested location to do any manual scripting of installation if desired
-
+Though empty, the `install-deps.sh` script has been included as a suggested location to do any custom scripted installation of themes or plugins as required.
 
 ## Working with the Database via CLI
+
+Firstly, source the database credentials.
 
 ```bash
 source envs/dev.env
 ```
 
+We can check what is set with
+
+```bash
+env | grep DB_
+```
+
 ### Access the Database
 
+Connect as WordPress db user
 ```bash
 docker compose exec db mysql -u $DB_USERNAME -p$DB_PASSWORD $DB_NAME
 ```
-Connect as root
-
+Connect as root user
 ```bash
 docker compose exec db mysql -u root -p$DB_ROOT_PASSWORD
 ```
 
 ### Export
+
+If the database container is running we can export with
 
 ```bash
 docker compose exec db mysqldump -u root -p$DB_ROOT_PASSWORD --all-databases > dump.sql
@@ -106,3 +128,14 @@ docker compose exec db mysqldump -u root -p$DB_ROOT_PASSWORD --all-databases > d
 docker compose exec -T db mysql -u root -p$DB_ROOT_PASSWORD $DB_NAME < dump.sql
 ```
 
+Or the import `./import-data.sh` script will search our systems
+
+```bash
+./import-data.sh
+```
+
+## Reset
+
+```bash
+docker compose down -v
+```

@@ -4,6 +4,6 @@ plugins/*
 !plugins/.keep
 
 composer.lock
-*.sql
+**/*sql
 /vendor/
 **/local.env
