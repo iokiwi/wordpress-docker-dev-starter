@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-WORDPRESS_TAG=${1:-"6.4-php8.3"}
+export WORDPRESS_TAG=${1:-"6.4-php8.3"}
 
 echo "\$WORDPRESS_TAG=$WORDPRESS_TAG"
 

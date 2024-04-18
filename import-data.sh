@@ -8,6 +8,7 @@ if [ -n "$sql_file" ]; then
     source envs/dev.env
 
     echo "Found $sql_file attempting to import..."
+    echo "Starting database..."
     docker compose up -d db
 
     # TODO: Potetnially we can do something a lot smarter than a sleep such

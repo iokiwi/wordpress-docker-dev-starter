@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-WORDPRESS_TAG=${1:-"6.4-php8.3"}
+export WORDPRESS_TAG=${1:-"6.4-php8.3"}
 
 
 # Source the varibales eary otherwise the buils stage complains about values
